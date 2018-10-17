@@ -66,7 +66,6 @@ struct RecommendedMove{
 
 /********************************************************************************************************************************/
 
-// TO DO: move some of these to mancala.c, and probably then can hide struct RecommendedMove altogether
 
 stones_t CountAllPlayerStones( distribution_t d, _Bool p1turn );
 
