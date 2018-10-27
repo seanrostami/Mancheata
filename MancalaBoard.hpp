@@ -38,7 +38,7 @@ class MancalaBoard{
 		static const pit_t		NUM_STONES_PER_PIT	= 4;
 		static const stones_t		NUM_BITS_PER_PIT; // = 5
 		static const stones_t		NUM_BITS_PER_PLAYER; // = 30
-		static const distribution_t	LOWEST_POCKET_MASK; // = 0x1F
+		static const distribution_t	LOWEST_PIT_MASK; // = 0x1F
 		static const distribution_t	PLAYER1_SIDE_MASK; // = 0x3FFFFFFF
 
 		static pit_t OppositePitIndex( pit_t i ){
@@ -56,7 +56,7 @@ class MancalaBoard{
 		// utilize default copy-constructor, default assignment, default (empty) destructor
 
 		void RemoveAllStonesFrom( pit_t i ){
-			distribution &= ~( LOWEST_POCKET_MASK << (i*NUM_BITS_PER_PIT) ); // right operand has all bits 0 in the segment corresponding to Pit #i and 1 elsewhere
+			distribution &= ~( LOWEST_PIT_MASK << (i*NUM_BITS_PER_PIT) ); // right operand has all bits 0 in the segment corresponding to Pit #i and 1 elsewhere
 		}
 
 		void AddOneStoneTo( pit_t i ){
@@ -69,7 +69,7 @@ class MancalaBoard{
 		}
 
 		stones_t NumStonesInPit( pit_t i ) const {
-			return ( distribution >> (i*NUM_BITS_PER_PIT) ) & LOWEST_POCKET_MASK; // shift Pit #i's segment to the bottom and clear/zero everything else
+			return ( distribution >> (i*NUM_BITS_PER_PIT) ) & LOWEST_PIT_MASK; // shift Pit #i's segment to the bottom and clear/zero everything else
 		}
 
 		stones_t NumStonesOnSide( bool player ) const;
@@ -82,7 +82,7 @@ class MancalaBoard{
 
 const MancalaBoard::stones_t		MancalaBoard::NUM_BITS_PER_PIT		= (8*sizeof(MancalaBoard::distribution_t))/NUM_PITS;
 const MancalaBoard::stones_t		MancalaBoard::NUM_BITS_PER_PLAYER	= NUM_BITS_PER_PIT*NUM_PITS/2;
-const MancalaBoard::distribution_t	MancalaBoard::LOWEST_POCKET_MASK	= (1 << NUM_BITS_PER_PIT) - 1;
+const MancalaBoard::distribution_t	MancalaBoard::LOWEST_PIT_MASK		= (1 << NUM_BITS_PER_PIT) - 1;
 const MancalaBoard::distribution_t	MancalaBoard::PLAYER1_SIDE_MASK		= (1ULL << NUM_BITS_PER_PLAYER) - 1;
 
 
@@ -93,7 +93,7 @@ MancalaBoard::stones_t MancalaBoard::NumStonesOnSide( bool player ) const {
 	distribution_t d = ( player ? ( distribution & PLAYER1_SIDE_MASK ) : ( distribution >> NUM_BITS_PER_PLAYER ) ); // arrange for the appropriate 30-bit segment to occupy the least-significant bits with 0 elsewhere
 	stones_t total = 0;
 	while( d ){ // consider each 5-bit segment to be an independent integer and sum them
-		total += d & LOWEST_POCKET_MASK;
+		total += d & LOWEST_PIT_MASK;
 		d >>= NUM_BITS_PER_PIT;
 	}
 	return total;
