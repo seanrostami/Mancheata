@@ -27,7 +27,7 @@ pronounced "mawn-CHEAT-a", a program written in C for a wearable Arduino-based d
 
 _Mancheata_ is intended to run on a "wearable computer" and discreetly recommends what moves to perform in the popular game _Mancala_. In other words, it allows you to cheat. It is written in C [for an Arduino microcontroller](https://www.arduino.cc/reference/en/), receives updates about the true state of the game from the wearer via a physical button, and transmits its recommendation to the wearer via a vibration motor (see USAGE and IMPLEMENTATION, below, for more details).
 
-Although it is known that Player #1 can always win with perfect play, there is no conceptual understanding for Mancala of what "perfect play" means. In the absence of such a deliberate strategy, Mancheata merely simulates a few turns of play and recommends the first move of the sequence that guarantees the largest minimum difference in scores at the end of those few moves (confusing, right?).
+Although it is known that Player #1 can always win with perfect play, there is no conceptual understanding for Mancala of what "perfect play" means. In the absence of such a deliberate strategy, Mancheata merely simulates a few turns of play and recommends the first move of the sequence that guarantees the largest minimum difference in scores at the end of those few moves (confusing, right?). _UPDATE: Actually, the procedure just described is rather weak. I have an alternative procedure that seems noticeably better. Coming soon..._
 
 
 ## STYLE ##
@@ -83,4 +83,4 @@ The Vibrator's leads must be connected to a pin capable of PWM (I chose D9) and 
 The "lookahead depth", which is the number of turns to simulate before making a recommendation, can be changed at the top of the mancheata.ino file. Obviously, increasing it makes the overall result of the game more certain and more lopsided. However, the time required to perform the lookahead may be unrealistic if the depth is too high (I did not yet determine what is the maximum depth that can be used on a Nano in a real-world game). Worse, too high a depth may cause stack overflow since lookahead is accomplished by multiple-recursion.
 
 
-_last updated Oct 17, 2018_
+_last updated Oct 27, 2018_
