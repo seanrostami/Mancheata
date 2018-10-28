@@ -11,7 +11,7 @@ class MancalaLookahead {
 
 		static MancalaLookahead* Instance( int alternations ){ // [Singleton]
 			MancalaLookahead::alternations = alternations;
-			if( MancalaLookahead::instance != 0 )
+			if( MancalaLookahead::instance == 0 )
 				MancalaLookahead::instance = new MancalaLookahead;
 			return MancalaLookahead::instance;
 		}
