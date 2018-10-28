@@ -114,9 +114,8 @@ void setup() {
 
 	// very first turn
 	MancalaGame initial;
-	MancalaLookahead recommender( LOOKAHEAD_DEPTH );
 	announceLookahead();
-	announceRecommendation( recommender.Recommendation( &initial ) );
+	announceRecommendation( MancalaLookahead::Instance( LOOKAHEAD_DEPTH )->Recommendation( &initial ) );
 	
 }
 
@@ -127,7 +126,6 @@ void setup() {
 void loop() {
 	
 	static MancalaGame game;
-	static MancalaLookahead recommender( LOOKAHEAD_DEPTH );
 	
 	if( num_presses > 0 ){
 		
@@ -150,7 +148,7 @@ void loop() {
 			if( game.Player() ){ // irrelevant of who played the previous turn, if it is user's turn next then recommend a move
 				delay( RECOMMENDATION_ANNOUNCE_DELAY );
 				announceLookahead();
-				announceRecommendation( recommender.Recommendation( &game ) );
+				announceRecommendation( MancalaLookahead::Instance( LOOKAHEAD_DEPTH )->Recommendation( &game ) );
 			}
 			
 		}
