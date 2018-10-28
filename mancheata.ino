@@ -2,9 +2,6 @@
 #include "MancalaAnalyzer.hpp"
 
 
-// currently using Arduino IDE for building, probably silently #includes certain things, probably need to explicitly #include something here if a different toolchain is used
-
-
 /********************************************************************************************************************************/
 
 
