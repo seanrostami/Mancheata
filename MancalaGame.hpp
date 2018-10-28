@@ -1,3 +1,6 @@
+#ifndef SJR_MANCALAGAME
+#define SJR_MANCALAGAME
+
 
 #include "MancalaBoard.hpp"
 
@@ -107,3 +110,6 @@ MancalaBoard MancalaGame::SimulateMove( MancalaBoard::pit_t i ) const {
 
 	return simulation;
 }
+
+
+#endif // SJR_MANCALAGAME
