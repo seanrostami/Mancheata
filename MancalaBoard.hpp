@@ -3,6 +3,8 @@
 
 
 //#include <cstdint>
+/* Arduino IDE automatically includes some stuff, including stdint, when 
+building from .ino, but need stdint when using other build tools */
 
 
 /********************************************************************************************************************************/
