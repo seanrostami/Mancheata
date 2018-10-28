@@ -1,3 +1,6 @@
+#ifndef SJR_MANCALABOARD
+#define SJR_MANCALABOARD
+
 
 //#include <cstdint>
 
@@ -98,3 +101,6 @@ MancalaBoard::stones_t MancalaBoard::NumStonesOnSide( bool player ) const {
 	}
 	return total;
 }
+
+
+#endif // SJR_MANCALABOARD
