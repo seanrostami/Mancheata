@@ -2,6 +2,8 @@
 
 pronounced "mawn-CHEAT-a", a program written in C++ for a wearable Arduino-based device that recommends moves for the popular game Mancala
 
+_the original version of Mancheata, written in C, is available earlier in the commit graph_
+
 
 ## AUTHOR ##
 
