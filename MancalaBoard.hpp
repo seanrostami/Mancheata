@@ -24,14 +24,18 @@ class MancalaBoard{
 
 	private:
   
-	  	typedef uint64_t distribution_t;
+	  	typedef uint64_t distribution_t; // see member distribution for explanation
 
 	  	distribution_t 	distribution;
-		/* encodes in its least-significant 60 bits the state of the twelve pockets:
-		the least significant 30 bits encode Player #1's pockets, the next 30 bits encode Player #2's pockets, and the highest 4 bits are unused;
-		each block of 30 bits is divided into six segments of 5 bits and each segment corresponds to a pocket;
-		each segment is interpreted as an ordinary unsigned integer and that integer is the number of stones in the pocket, so each pocket can contain a maximum of 31 stones
-		(probably it can be proved that a real game can never produce a pocket with more stones than this) */
+		/* Member distribution encodes in its least-significant 60 bits the state of the twelve pits:
+		- the least significant 30 bits encode Player #1's pits, the next 30 bits encode Player #2's pits, and the highest 4 bits are unused;
+		- each block of 30 bits is divided into six segments of 5 bits and each segment corresponds to a pit;
+		- each segment is interpreted as an ordinary unsigned integer and that integer is the number of stones in the pit, so each pit can contain a maximum of 31 stones.
+		Note that it is extremely unlikely, and probably impossible (proof?), to have more than 31 stones in a single pit. 
+		A single move can increase the number of stones in a pit by at most one, and each pit starts with four stones. 
+		So, even if no stones were ever removed from play (capture, etc.) and somehow there were a pit that increased 
+		by one during every move without exception, and that pit were never itself selected as a move, it would still 
+		require 28 moves to exceed the maximum. */
 	   
 		stones_t p1score;
 		stones_t p2score;
