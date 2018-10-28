@@ -1,3 +1,6 @@
+#ifndef SJR_MANCALAANALYZER
+#define SJR_MANCALAANALYZER
+
 
 #include "MancalaGame.hpp"
 
@@ -157,3 +160,6 @@ MancalaLookahead::Forecast MancalaLookahead::BestBalanceAfter( const MancalaGame
 
 	return prediction;
 }
+
+
+#endif // SJR_MANCALAANALYZER
