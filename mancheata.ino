@@ -1,5 +1,3 @@
-// C++ version requires 3838 bytes
-
 
 #include "MancalaAnalyzer.hpp"
 
