@@ -27,7 +27,7 @@ _the original version of Mancheata, written in C, is available earlier in the co
 
 ## PURPOSE ##
 
-_Mancheata_ is intended to run on a "wearable computer" and discreetly recommends what moves to perform in the popular game _Mancala_. In other words, it allows you to cheat. It is written in C++ [for an Arduino microcontroller](https://www.arduino.cc/reference/en/), receives updates about the true state of the game from the wearer via a physical button, and transmits its recommendation to the wearer via a vibration motor (see USAGE and IMPLEMENTATION, below, for more details).
+_Mancheata_ is intended to run on a "wearable computer" and discreetly recommends what moves to perform in the popular game _Mancala_. In other words, it allows you to cheat. It is written in C++ [for an Arduino microcontroller](https://www.arduino.cc/reference/en/), receives updates about the true state of the game from the wearer via a physical button, and transmits its recommendation to the wearer via a vibration motor (see USAGE and HARDWARE, below, for more details).
 
 Although it is known that Player #1 can always win with perfect play, there is no conceptual understanding for Mancala of what "perfect play" means. In the absence of such a deliberate strategy, Mancheata merely simulates a few turns of play and recommends the first move of the sequence that guarantees a certain balance of points and "material", which is to say the number of stones on the player's own side (for details, see MancalaAnalyzer.hpp).
 
