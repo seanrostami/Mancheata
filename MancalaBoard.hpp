@@ -59,6 +59,7 @@ class MancalaBoard{
 		static const stones_t		NUM_BITS_PER_PLAYER; // = 30
 		static const distribution_t	LOWEST_PIT_MASK; // = 0x1F
 		static const distribution_t	PLAYER1_SIDE_MASK; // = 0x3FFFFFFF
+		static const distribution_t	SPACIOUS_1 = 1; // 1, but correct width
 
 	public:		
 
@@ -101,10 +102,10 @@ class MancalaBoard{
 /********************************************************************************************************************************/
 
 
-const MancalaBoard::stones_t		MancalaBoard::NUM_BITS_PER_PIT		= (8*sizeof(MancalaBoard::distribution_t))/NUM_PITS;
+const MancalaBoard::stones_t		MancalaBoard::NUM_BITS_PER_PIT		= (8*sizeof(MancalaBoard::distribution_t))/NUM_PITS; // truncates
 const MancalaBoard::stones_t		MancalaBoard::NUM_BITS_PER_PLAYER	= NUM_BITS_PER_PIT*NUM_PITS/2;
 const MancalaBoard::distribution_t	MancalaBoard::LOWEST_PIT_MASK		= (1 << NUM_BITS_PER_PIT) - 1;
-const MancalaBoard::distribution_t	MancalaBoard::PLAYER1_SIDE_MASK		= (1ULL << NUM_BITS_PER_PLAYER) - 1;
+const MancalaBoard::distribution_t	MancalaBoard::PLAYER1_SIDE_MASK		= (SPACIOUS_1 << NUM_BITS_PER_PLAYER) - 1;
 
 
 /********************************************************************************************************************************/
