@@ -20,7 +20,21 @@ class MancalaBoard{
 	public:
 
 		typedef int8_t pit_t; // counts and indexes pockets (important to be SIGNED)
+	
+		static const pit_t		NUM_PITS		= 12;
+	
+			/* with NUM_PITS==12, 
+				     PLAYER #2
+			   (11) (10) (09) (08) (07) (06)
+			()                               ()
+			   (00) (01) (02) (03) (04) (05)
+				     PLAYER #1
+				      (=USER)
+			*/
+
 		typedef int8_t stones_t; // counts stones (important to be SIGNED)
+	
+		static const stones_t		NUM_STONES_PER_PIT	= 4;
 
 	private:
   
@@ -40,15 +54,13 @@ class MancalaBoard{
 		stones_t p1score;
 		stones_t p2score;
 		bool player; // true <=> Player #1's turn
-
-	public:
-
-		static const pit_t		NUM_PITS		= 12;
-		static const pit_t		NUM_STONES_PER_PIT	= 4;
+	
 		static const stones_t		NUM_BITS_PER_PIT; // = 5
 		static const stones_t		NUM_BITS_PER_PLAYER; // = 30
 		static const distribution_t	LOWEST_PIT_MASK; // = 0x1F
 		static const distribution_t	PLAYER1_SIDE_MASK; // = 0x3FFFFFFF
+
+	public:		
 
 		static pit_t OppositePitIndex( pit_t i ){
 			return NUM_PITS-1 - i; // sends 0,1,2,3,4,5 to 11,10,9,8,7,6 etc.
