@@ -19,7 +19,7 @@ class MancalaBoard{
 
 	public:
 
-		typedef int8_t pit_t; // counts and indexes pockets (important to be SIGNED)
+		typedef int8_t pit_t; // counts and indexes pits (important to be SIGNED)
 	
 		static const pit_t		NUM_PITS		= 12;
 	
