@@ -82,8 +82,7 @@ class MancalaBoard{
 		}
 
 		void AddOneStoneTo( pit_t i ){
-			distribution_t spacious1 = 1; // important to use a type that is large enough to shift, safer than using 1ULL
-			distribution += ( spacious1 << (i*NUM_BITS_PER_PIT) ); // right operand has a 1 in the rightmost bit of the segment corresponding to Pit #i and 0 elsewhere
+			distribution += ( SPACIOUS_1 << (i*NUM_BITS_PER_PIT) ); // right operand has a 1 in the rightmost bit of the segment corresponding to Pit #i and 0 elsewhere
 		}
 
 		void ChangeTurn( void ){
