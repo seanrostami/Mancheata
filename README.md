@@ -1,8 +1,8 @@
 # Mancheata
 
-pronounced "mawn-CHEAT-a", a program written in C++ for a wearable Arduino-based device that recommends moves for the popular game Mancala
+pronounced "mawn-CHEAT-a", a program written* in C++ for a wearable Arduino-based device that recommends moves for the popular game Mancala
 
-_the original version of Mancheata, written in C, is available earlier in the commit graph_
+_* the original version, written in straight C, is available earlier in the commit graph_
 
 
 ## AUTHOR ##
@@ -46,7 +46,7 @@ Within the family of games generally referred to as "Mancala", Mancheata assumes
 
 - If the **last** stone of the distribution is deposited into one of the player's own pits then he can/must perform another move. Otherwise, play passes to the opponent.
 
-- The game ends when a player _starts_ a turn and with all his pits empty (most explanations of Mancala are vague about this part). When this happens, the player's opponent deposits all stones from his own pits into his own store. The winner is the player whose store contains the most stones.
+- The game ends when a player _starts_ a turn with all his pits empty (most explanations of Mancala are vague about this part). When this happens, the player's opponent deposits all stones from his own pits into his own store. The winner is the player whose store contains the most stones.
 
 ![MANCALA](https://github.com/seanrostami/Mancheata/raw/master/MANCALA.JPG "board and initial distribution")
 
