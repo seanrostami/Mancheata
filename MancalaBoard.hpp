@@ -12,7 +12,10 @@ building from .ino, but need stdint when using other build tools */
 
 /* MancalaBoard contains a "snapshot" of the board at some time: the number of stones in each pit, the number of stones in each store (i.e. scores), and which player has the turn.
 	By modifying MancalaBoard, variations on the U.S.-style game Kalah are obtained. For example, different number of pits, different number of stones per pit, etc.
-	MancalaBoard does NOT contain anything dependent on the particular style of play, of which there are many. These things are handled by MancalaGame. */
+	Also, there are methods to query or change the state of the board. These methods perform somewhat atomic operations that are ignorant of the particular style of gameplay 
+	and universal to all such styles. For example, removing all stones from a pit is something that must always be done while the rules for capture can be slightly different 
+	from one style to another. Thus, the former is within the scope of MancalaBoard and the latter is not. The particulars of gameplay are handled by MancalaGame. */
+
 class MancalaBoard{
 
 	friend class MancalaGame;
@@ -55,11 +58,11 @@ class MancalaBoard{
 		stones_t p2score;
 		bool player; // true <=> Player #1's turn
 	
-		static const stones_t		NUM_BITS_PER_PIT; // = 5
-		static const stones_t		NUM_BITS_PER_PLAYER; // = 30
-		static const distribution_t	LOWEST_PIT_MASK; // = 0x1F
-		static const distribution_t	PLAYER1_SIDE_MASK; // = 0x3FFFFFFF
+		static const stones_t		NUM_BITS_PER_PIT = (8*sizeof(MancalaBoard::distribution_t))/NUM_PITS; // = 5
+		static const stones_t		NUM_BITS_PER_PLAYER = NUM_BITS_PER_PIT*NUM_PITS/2; // = 30
+		static const distribution_t	LOWEST_PIT_MASK = (1 << NUM_BITS_PER_PIT) - 1; // = 0x1F
 		static const distribution_t	SPACIOUS_1 = 1; // 1, but correct width
+		static const distribution_t	PLAYER1_SIDE_MASK = (SPACIOUS_1 << NUM_BITS_PER_PLAYER) - 1; // = 0x3FFFFFFF
 
 	public:		
 
@@ -93,32 +96,17 @@ class MancalaBoard{
 			return ( distribution >> (i*NUM_BITS_PER_PIT) ) & LOWEST_PIT_MASK; // shift Pit #i's segment to the bottom and clear/zero everything else
 		}
 
-		stones_t NumStonesOnSide( bool player ) const;
+		stones_t NumStonesOnSide( bool player ) const {
+			distribution_t d = ( player ? ( distribution & PLAYER1_SIDE_MASK ) : ( distribution >> NUM_BITS_PER_PLAYER ) ); // arrange for the appropriate 30-bit segment to occupy the least-significant bits with 0 elsewhere
+			stones_t total = 0;
+			while( d ){ // consider each 5-bit segment to be an independent integer and sum them
+				total += d & LOWEST_PIT_MASK;
+				d >>= NUM_BITS_PER_PIT;
+			}
+			return total;
+		}
 
 };
-
-
-/********************************************************************************************************************************/
-
-
-const MancalaBoard::stones_t		MancalaBoard::NUM_BITS_PER_PIT		= (8*sizeof(MancalaBoard::distribution_t))/NUM_PITS; // truncates
-const MancalaBoard::stones_t		MancalaBoard::NUM_BITS_PER_PLAYER	= NUM_BITS_PER_PIT*NUM_PITS/2;
-const MancalaBoard::distribution_t	MancalaBoard::LOWEST_PIT_MASK		= (1 << NUM_BITS_PER_PIT) - 1;
-const MancalaBoard::distribution_t	MancalaBoard::PLAYER1_SIDE_MASK		= (SPACIOUS_1 << NUM_BITS_PER_PLAYER) - 1;
-
-
-/********************************************************************************************************************************/
-
-
-MancalaBoard::stones_t MancalaBoard::NumStonesOnSide( bool player ) const {
-	distribution_t d = ( player ? ( distribution & PLAYER1_SIDE_MASK ) : ( distribution >> NUM_BITS_PER_PLAYER ) ); // arrange for the appropriate 30-bit segment to occupy the least-significant bits with 0 elsewhere
-	stones_t total = 0;
-	while( d ){ // consider each 5-bit segment to be an independent integer and sum them
-		total += d & LOWEST_PIT_MASK;
-		d >>= NUM_BITS_PER_PIT;
-	}
-	return total;
-}
 
 
 #endif // SJR_MANCALABOARD
