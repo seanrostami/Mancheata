@@ -116,48 +116,33 @@ MancalaLookahead::Forecast MancalaLookahead::BestMarginAfter( const MancalaGame 
 }
 
 
+/* nearly identical to MancalaLookahead::BestMarginAfter, but quantity judged is difference between
+number of stones on each player's side, not difference between points */
 MancalaLookahead::Forecast MancalaLookahead::BestBalanceAfter( const MancalaGame * pgame, int alternations ){
-
 	MancalaGame hypothetical = *pgame;
-
 	Forecast prediction;
-
-	if( pgame->GameEndsNow() ){ // current player has no stones on side, game ends immediately without move
-		prediction.differential = hypothetical.Balance(); // resulting balance is what it is
+	if( pgame->GameEndsNow() ){
+		prediction.differential = hypothetical.Balance();
 		return prediction;
 	}
-
 	MancalaBoard::stones_t diff;
-
 	for( MancalaBoard::pit_t choice = 0; choice < MancalaBoard::NUM_PITS; choice++ ){
-
 		if( !pgame->ValidMove( choice ) )
 			continue;
-
-		hypothetical = pgame->SimulateMove( choice ); // when considering hypothetical moves, important to always start from the given state
-
-		if( hypothetical.Player() == pgame->Player() ){ // the player making this move will receive another move
+		hypothetical = pgame->SimulateMove( choice );
+		if( hypothetical.Player() == pgame->Player() )
 			diff = BestMarginAfter( &hypothetical, alternations ).differential;
-			// best balance guaranteed by this move: same as that guaranteed after the turn's extra move
-		}
-		else{ // turn will transfer to opponent after this move, but lookahead may not consider further turns
-			if( alternations >= 1 ){ // lookahead allowed to consider more turns
-				diff = -BestMarginAfter( &hypothetical, alternations-1 ).differential;
-				// best balance guaranteed by this move: the value p1-p2, where p2-p1 [sic] is the best margin that the *opponent* can force (assumption is that opponent plays well, whatever that means))
-			}
-			else{ // lookahead must stop after this move
+		else{
+			if( alternations >= 1 )
+				diff = -BestMarginAfter( &hypothetical, alternations-1 ).differential;				
+			else
 				diff = -hypothetical.Balance();
-				// best balance guaranteed by this move: whatever the board shows now (but remember that hypothetical is from opponent's perspective)
-			}
 		}
-
-		if( diff > prediction.differential ){ // record which move guarantees the most
+		if( diff > prediction.differential ){
 			prediction.differential = diff;
 			prediction.choice = choice;
 		}
-		
 	}
-
 	return prediction;
 }
 
