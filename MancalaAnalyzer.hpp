@@ -56,14 +56,14 @@ class MancalaLookahead {
 		based only on the true state of the game, and so the second move recommended may 
 		not be the move that was "intended" to follow the first move recommended. */
 
-		static int alternations;
+		static int alternations; // initialized below
 
 };
 
 
-static MancalaLookahead* MancalaLookahead::instance = 0; // [Singleton]
+MancalaLookahead* MancalaLookahead::instance = 0; // [Singleton]
 
-static int MancalaLookahead::alternations = 1;
+int MancalaLookahead::alternations = 1;
 
 
 /********************************************************************************************************************************/
