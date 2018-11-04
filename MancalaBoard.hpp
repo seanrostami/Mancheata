@@ -3,7 +3,7 @@
 
 
 //#include <cstdint>
-/* Arduino IDE automatically includes some stuff, including stdint, when 
+/* Arduino IDE automatically includes some stuff, like stdint, when 
 building from .ino, but need stdint when using other build tools */
 
 
@@ -61,8 +61,7 @@ class MancalaBoard{
 		static const stones_t		NUM_BITS_PER_PIT = (8*sizeof(MancalaBoard::distribution_t))/NUM_PITS; // = 5
 		static const stones_t		NUM_BITS_PER_PLAYER = NUM_BITS_PER_PIT*NUM_PITS/2; // = 30
 		static const distribution_t	LOWEST_PIT_MASK = (1 << NUM_BITS_PER_PIT) - 1; // = 0x1F
-		static const distribution_t	SPACIOUS_1 = 1; // 1, but correct width
-		static const distribution_t	PLAYER1_SIDE_MASK = (SPACIOUS_1 << NUM_BITS_PER_PLAYER) - 1; // = 0x3FFFFFFF
+		static const distribution_t	PLAYER1_SIDE_MASK = (((distribution_t)1) << NUM_BITS_PER_PLAYER) - 1; // = 0x3FFFFFFF
 
 	public:		
 
@@ -85,7 +84,7 @@ class MancalaBoard{
 		}
 
 		void AddOneStoneTo( pit_t i ){
-			distribution += ( SPACIOUS_1 << (i*NUM_BITS_PER_PIT) ); // right operand has a 1 in the rightmost bit of the segment corresponding to Pit #i and 0 elsewhere
+			distribution += ( ((distribution_t)1) << (i*NUM_BITS_PER_PIT) ); // right operand has a 1 in the rightmost bit of the segment corresponding to Pit #i and 0 elsewhere
 		}
 
 		void ChangeTurn( void ){
