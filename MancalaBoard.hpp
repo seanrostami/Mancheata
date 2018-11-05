@@ -21,6 +21,8 @@ class MancalaBoard{
 	friend class MancalaGame;
 
 	public:
+	
+		typedef int8_t stones_t; // counts stones (important to be SIGNED)
 
 		typedef int8_t pit_t; // counts and indexes pits (important to be SIGNED)
 	
@@ -34,10 +36,6 @@ class MancalaBoard{
 				     PLAYER #1
 				      (=USER)
 			*/
-
-		typedef int8_t stones_t; // counts stones (important to be SIGNED)
-	
-		static const stones_t		NUM_STONES_PER_PIT	= 4;
 
 	private:
   
@@ -58,10 +56,10 @@ class MancalaBoard{
 		stones_t p2score;
 		bool player; // true <=> Player #1's turn
 	
-		static const stones_t		NUM_BITS_PER_PIT = (8*sizeof(MancalaBoard::distribution_t))/NUM_PITS; // = 5
-		static const stones_t		NUM_BITS_PER_PLAYER = NUM_BITS_PER_PIT*NUM_PITS/2; // = 30
-		static const distribution_t	LOWEST_PIT_MASK = (1 << NUM_BITS_PER_PIT) - 1; // = 0x1F
-		static const distribution_t	PLAYER1_SIDE_MASK = (((distribution_t)1) << NUM_BITS_PER_PLAYER) - 1; // = 0x3FFFFFFF
+		static const stones_t		NUM_BITS_PER_PIT = (8*sizeof(MancalaBoard::distribution_t))/NUM_PITS; // = 5, when NUM_PITS==12
+		static const stones_t		NUM_BITS_PER_PLAYER = NUM_BITS_PER_PIT*NUM_PITS/2; // = 30, when NUM_PITS==12
+		static const distribution_t	LOWEST_PIT_MASK = (1 << NUM_BITS_PER_PIT) - 1; // = 0x1F, when NUM_PITS==12
+		static const distribution_t	PLAYER1_SIDE_MASK = (((distribution_t)1) << NUM_BITS_PER_PLAYER) - 1; // = 0x3FFFFFFF, when NUM_PITS==12
 
 	public:		
 
