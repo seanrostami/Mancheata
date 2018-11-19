@@ -20,7 +20,7 @@
 #define RECOMMENDATION_PULSE_DURATION	500 // milliseconds, how long is each pulse used to announce the recommendation to the player (N pulses <-> pocket #N)
 #define RECOMMENDATION_PULSE_DELAY	250 // milliseconds, how long to wait between the pulses used to recommend
 
-#define LOOKAHEAD_DEPTH			4 /* number of turns to consider when predicting best move 
+#define LOOKAHEAD_DEPTH			5 /* number of turns to consider when predicting best move 
 						note that this is usually different from the number of moves performed, since a player receives an extra turn for depositing the last stone into his store
 						ex: 4 means simulate Player #1's move(s) followed by Player #2's move(s) followed by Player #1's move(s) followed by Player #2's move(s) */
 
@@ -110,7 +110,7 @@ void setup() {
 	// very first turn
 	MancalaGame initial;
 	announceLookahead();
-	announceRecommendation( MancalaLookahead::Instance( LOOKAHEAD_DEPTH )->Recommendation( &initial ) );
+	announceRecommendation( MancalaLookahead::Instance( LOOKAHEAD_DEPTH-1 )->Recommendation( &initial ) );
 	
 }
 
@@ -143,7 +143,7 @@ void loop() {
 			if( game.Player() ){ // irrelevant of who played the previous turn, if it is user's turn next then recommend a move
 				delay( RECOMMENDATION_ANNOUNCE_DELAY );
 				announceLookahead();
-				announceRecommendation( MancalaLookahead::Instance( LOOKAHEAD_DEPTH )->Recommendation( &game ) );
+				announceRecommendation( MancalaLookahead::Instance( LOOKAHEAD_DEPTH-1 )->Recommendation( &game ) );
 			}
 			
 		}
